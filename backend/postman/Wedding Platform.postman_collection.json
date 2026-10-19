@@ -1,0 +1,1596 @@
+{
+	"info": {
+		"_postman_id": "6a9274d1-9636-4010-9ba0-2a3964d247a7",
+		"name": "Wedding Platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "110185"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"kd@gmail.com\",\n    \"password\": \"password\",\n    \"firstName\": \"kd\",\n    \"lastName\": \"sharma\",\n    \"roleId\": 1,\n    \"phoneNumber\": \"1234556789\",\n    \"gender\": \"Male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();  // Parse response",
+									"",
+									"if (response.token) {",
+									"    pm.environment.set(\"authToken\", response.token);  // Store token",
+									"    console.log(\"Token saved: \" + response.token);",
+									"} else {",
+									"    console.log(\"Token not found!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"kd@gmail.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Rajesh\",\n    \"lastName\": \"Sharma\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"vendor1@gmail.com\",\n    \"password\": \"password\",\n    \"firstName\": \"Vendor1\",\n    \"lastName\": \"sharma\",\n    \"roleId\": 2,\n    \"phoneNumber\": \"1234567890\",\n    \"gender\": \"Male\"\n\n    // Update one or more filed\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0Mzc2NTEzNywiZXhwIjoxNzQzODUxNTM3fQ.z9VGr5tnOyqJcmSN4hdVFEHuAMVkQelarK6B_25FP04\",\n    \"newPassword\": \"newPassword\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/reset-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"kundankumar.jayant@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth//forgot-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RSVP",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Rajesh\",\n    \"lastName\": \"Sharma\",\n    \"email\": \"test@gmail.com\", \n    \"address\": \"patna\", \n    \"relationship\": \"ROHAN (Brother)\", \n    \"plusOnes\": 10,\n    \"status\": \"attending\", \n    \"dietary_restrictions\": \"None\", \n    \"additionalNotes\": \"No\",\n    \"coupleId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/rsvp",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"rsvp"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPassword\": \"newPassword\",\n    \"newPassword\": \"newPassword\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/change-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get RSVP List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/rsvp",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"rsvp"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OTP",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/couples/sendOTP",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"couples",
+								"sendOTP"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Couples",
+			"item": [
+				{
+					"name": "Create couples profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"partnerName\": \"Test Partner2\", \n    \"startDate\": \"2025-12-12\", \n    \"endDate\": \"2025-12-16\", \n    \"location\": \"Patna\", \n    \"guestCount\": \"23\", \n    \"totalBudget\": 1200000, \n    \"theme\": \"Bollywood\", \n    \"colorScheme\": \"Test\", \n    \"services\": [\"test1\", \"test2\"],\n    \"additional_notes\": \"temp notes\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/couples/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"couples",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get couples profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/couples/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"couples",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update couples profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"partnerName\": \"Test Partner2\", \n    \"startDate\": \"2025-12-12\", \n    \"endDate\": \"2025-12-16\", \n    \"location\": \"Patna\", \n    \"guestCount\": \"23\", \n    \"totalBudget\": 1200000, \n    \"theme\": \"Bollywood\", \n    \"colorScheme\": \"Test\", \n    \"services\": [\"test1\", \"test2\"],\n    \"additional_notes\": \"temp notes\",\n    \"firstName\": \"new\",\n    \"lastName\": \"sharma\",\n    \"phoneNumber\": \"1122334455\"\n    \n    //update one or more file\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/couples/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"couples",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vendors",
+			"item": [
+				{
+					"name": "Create vendor profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"businessName\": \"Test Vendors2\", \n    \"categoryId\": \"2\", \n    \"description\": \"Test description\", \n    \"website\": \"https://www.google.com\", \n    \"location\": \"London\",\n    \"services\": [\"Catering\"], \n    \"basePrice\": 40000,\n    \"durationHours\": 8,\n    \"startDate\": \"2025-05-01\",\n    \"endDate\": \"2025-05-04\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/vendors/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vendors profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/vendors/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update vendor profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"businessName\": \"Test Vendors2\", \n    \"categoryId\": \"2\", \n    \"description\": \"Test description\", \n    \"website\": \"https://www.google.com\", \n    \"location\": \"London\",\n    \"services\": \"Catering\", \n    \"basePrice\": 40000,\n    \"startDate\": \"2025-05-01\",\n    \"endDate\": \"2025-05-07\",\n    \"firstName\": \"jayant\"\n    // Update one or more field\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/vendors/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create vendor service",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"serviceName\": \"Venue Selection1\", \n    \"description\": \"Venue Selection\", \n    \"basePrice\": 30000, \n    \"durationHours\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/vendors/services",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update vendor service",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"serviceName\": \"Venue Selection1\", \n    \"description\": \"Venue Selection\", \n    \"basePrice\": 30000, \n    \"durationHours\": 5\n\n    // Update one or more field\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/vendors/services/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"services",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get vendors services",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/vendors/services",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete vendor service",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/vendors/services/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"services",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vendors availability",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/vendors/availability",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"availability"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vendors availability",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2025-07-01\", \n    \"start_time\": 1, \n    \"end_time\": 24\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/vendors/availability",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"availability"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vendors availability",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/vendors/availability/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"availability",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vendor List",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/vendors?category=2&startDate=2025-04-30&endDate=2025-05-06&search=Ca",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "2"
+								},
+								{
+									"key": "location",
+									"value": "London",
+									"disabled": true
+								},
+								{
+									"key": "minRating",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "startDate",
+									"value": "2025-04-30"
+								},
+								{
+									"key": "endDate",
+									"value": "2025-05-06"
+								},
+								{
+									"key": "search",
+									"value": "Ca"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vendor details by vendor id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/vendors/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vendor reviews by vendor id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/vendors/2/reviews",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"vendors",
+								"2",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Update bookings",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vendorId\": 2, \n    \"serviceId\": 4, \n    \"bookingDate\": \"2025-07-02\", \n    \"startTime\": \"10:50:00\", \n    \"endTime\": \"23:30:00\", \n    \"notes\": \"Draft notes5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bookings/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Booking",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/bookings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Details by bookingid",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/bookings/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel bookings",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bookings/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create bookings",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vendorId\": [1,2], \n    \"startDate\": \"2025-07-03\", \n    \"endDate\": \"2025-07-07\", \n    \"notes\": \"Draft notes\",\n    \"totalPrice\": 70000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bookings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "Update payment status",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"completed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/payments/1/status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"payments",
+								"1",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Make payments",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bookingId\": 1, \n    \"amount\": 30000, \n    \"paymentMethod\": \"credit_card\", \n    \"cardDetails\": \"8998\",\n    \"transactionId\": \"1213\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/payments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all payments",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/payments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get payment by paymentid",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/payments/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"payments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Details by bookingid",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/payments/booking/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"payments",
+								"booking",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refund Payment",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"completed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/payments/1/refund",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"payments",
+								"1",
+								"refund"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Payment",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/payments/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"payments",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Planners",
+			"item": [
+				{
+					"name": "Create Profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"businessName\": \"Test Vendors2\", \n    \"categoryId\": \"2\", \n    \"description\": \"Test description\", \n    \"website\": \"https://www.google.com\", \n    \"location\": \"London\",\n    \"serviceName\": \"Catering\", \n    \"basePrice\": 40000,\n    \"startDate\": \"2025-05-01\",\n    \"endDate\": \"2025-05-04\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/planners/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"planners",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Planner Profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/planners/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"planners",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"businessName\": \"Test Vendors2\", \n    \"categoryId\": \"2\", \n    \"description\": \"Test description\", \n    \"website\": \"https://www.google.com\", \n    \"location\": \"London\",\n    \"serviceName\": \"Catering\", \n    \"basePrice\": 50000,\n    \"startDate\": \"2025-05-02\",\n    \"endDate\": \"2025-05-07\",\n    \"firstName\": \"jayant\"\n    // Update one or more field\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/planners/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"planners",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Planner details by planner id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/planners/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"planners",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Planner List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/planners?category=2&serviceName=Pre-wedding photoshoots (engagement, bridal shower, etc.)",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"planners"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "2"
+								},
+								{
+									"key": "location",
+									"value": "London",
+									"disabled": true
+								},
+								{
+									"key": "minRating",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "startDate",
+									"value": "2025-04-30",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2025-05-06",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "ca",
+									"disabled": true
+								},
+								{
+									"key": "serviceName",
+									"value": "Pre-wedding photoshoots (engagement, bridal shower, etc.)"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Services List",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Category List",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{authToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/vendors/categories",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vendors",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
